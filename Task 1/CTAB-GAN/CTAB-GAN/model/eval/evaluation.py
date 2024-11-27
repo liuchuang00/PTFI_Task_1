@@ -7,7 +7,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn import svm,tree
 from sklearn.ensemble import RandomForestClassifier
-from dython.nominal import compute_associations
+from dython.nominal import associations
 from scipy.stats import wasserstein_distance
 from scipy.spatial import distance
 import warnings
@@ -167,9 +167,9 @@ def stat_sim(real_path,fake_path,cat_cols=None):
   fake = pd.read_csv(fake_path)
 
   # Computing the real and synthetic pair-wise correlations
-  real_corr = compute_associations(real, nominal_columns=cat_cols)
+  real_corr = associations(real, nominal_columns=cat_cols, compute_only=True)['corr']
 
-  fake_corr = compute_associations(fake, nominal_columns=cat_cols)
+  fake_corr = associations(real, nominal_columns=cat_cols, compute_only=True)['corr']
 
   # Computing the squared norm of the difference between real and synthetic pair-wise correlations
   corr_dist = np.linalg.norm(real_corr - fake_corr)
